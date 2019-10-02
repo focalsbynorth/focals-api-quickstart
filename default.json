@@ -1,0 +1,9 @@
+{
+    "quickstart": {
+        "apiKey": "",
+        "apiSecret": "",
+        "sharedSecret": "",
+        "integrationId": ""
+    },
+    "port": 8000
+}

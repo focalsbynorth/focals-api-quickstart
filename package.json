@@ -1,0 +1,16 @@
+{
+    "name": "north-quickstart",
+    "version": "1.0.0",
+    "description": "Example ability to assist a quick start",
+    "main": "index.js",
+    "author": "North Inc.",
+    "license": "ISC",
+    "dependencies": {
+        "@bynorth/focals-client-js": "^0.1.2",
+        "nconf": "^0.10.0",
+        "request-promise-native": "^1.0.7"
+    },
+    "scripts": {
+        "start": "node index.js"
+    }
+}
