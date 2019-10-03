@@ -1,6 +1,6 @@
 'use strict';
 
-const Ability = require('@bynorth/focals-client-js');
+const FocalsClient = require('@bynorth/focals-client-js');
 const config = require('nconf');
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -14,7 +14,7 @@ config
     .file('default', { file: `${configPath}/default.json` });
 
 
-Ability.init(config.get('quickstart'));
+FocalsClient.init(config.get('quickstart'));
 
 const app = express();
 
