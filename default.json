@@ -3,7 +3,8 @@
         "apiKey": "",
         "apiSecret": "",
         "sharedSecret": "",
-        "integrationId": ""
+        "integrationId": "",
+        "privateKey": ""
     },
     "port": 8000
 }

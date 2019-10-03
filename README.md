@@ -8,6 +8,7 @@ The initial example is provided only in NodeJS and is a barebones implementation
 ### index.js
 This is the entrypoint of the application.  
 In here we set up reading the config file, initialize the `focals-client-js` package, and set up the [Express](https://expressjs.com/) routes and starts the web server.  
+You'll want to replace the values in `default.json` with the values for your own ability.  
 The way config is handled, or the web framework used, are optional - these are just set up to provide an example.
 
 ### routes.js
