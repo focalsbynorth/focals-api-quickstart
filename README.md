@@ -36,5 +36,7 @@ An alternative is to populating the file is to use environment variables to set 
     - This package has been added to handle the configuration for the application using environment variables or a provided config file.
 - `request-promise-native`
     - This package has been added to handle network requests so that the ability can send requests to the Focals Developer API.
+- `semver`
+    - This package has been added to easily validate the version of a packet received on the `/action` endpoint.
 
 None of these libraries are mandatory - you can implement an ability any way you see fit (and in any language). We hope you find the `focals-client-js` package to be of use in making the development process easier.
