@@ -8,6 +8,7 @@ The initial example is provided only in NodeJS and is a barebones implementation
 ### index.js
 This is the entrypoint of the application.  
 In here we set up reading the config file, initialize the `focals-client-js` package, and set up the [Express](https://expressjs.com/) routes and starts the web server.  
+You'll want to replace the values in `default.json` with the values for your own ability.  
 The way config is handled, or the web framework used, are optional - these are just set up to provide an example.
 
 ### routes.js
@@ -36,5 +37,7 @@ An alternative is to populating the file is to use environment variables to set 
     - This package has been added to handle the configuration for the application using environment variables or a provided config file.
 - `request-promise-native`
     - This package has been added to handle network requests so that the ability can send requests to the Focals Developer API.
+- `semver`
+    - This package has been added to easily validate the version of a packet received on the `/action` endpoint.
 
 None of these libraries are mandatory - you can implement an ability any way you see fit (and in any language). We hope you find the `focals-client-js` package to be of use in making the development process easier.

@@ -1,9 +1,10 @@
 'use strict';
 
 const request = require('request-promise-native');
-const AbilitiesLibrary = require('@bynorth/focals-client-js');
+const FocalsClient = require('@bynorth/focals-client-js');
 const config = require('nconf').get('quickstart');
 const express = require('express');
+const semver = require('semver');
 
 const TOLERANCE_IN_SECONDS = 6 * 60;
 
@@ -62,13 +63,13 @@ router.post('/trigger', async (req, res) => {
     for (const userId in usersEnabled) {
         try {
             console.log(`sending to ${userId}`);
-            const publicKeys = await AbilitiesLibrary.DeviceKeysService.getPublicKeys(userId, config.integrationId);
+            const publicKeys = await FocalsClient.DeviceKeysService.getPublicKeys(userId, config.integrationId);
             const pathsToEncrypt = [
                 '/packetId',
                 '/icon/value'
             ];
             console.log(`plain packet: ${JSON.stringify(packet)}`);
-            const encryptedPacket = await AbilitiesLibrary.EncryptionService.encryptPacket(packet, pathsToEncrypt, publicKeys);
+            const encryptedPacket = await FocalsClient.EncryptionService.encryptPacket(packet, pathsToEncrypt, publicKeys);
             console.log(JSON.stringify(encryptedPacket));
             // Publish secure message
             await request({
@@ -104,13 +105,13 @@ router.post('/trigger', async (req, res) => {
 router.get('/enable', async (req, res) => {
     const { signature, state, timestamp } = req.query;
 
-    if (!AbilitiesLibrary.SignatureService.verifySignature(state, timestamp, signature)) {
-        return res.redirect(AbilitiesLibrary.UrlService.buildEnableUrl('', 'invalid_state'));
+    if (!FocalsClient.SignatureService.verifySignature(state, timestamp, signature)) {
+        return res.redirect(FocalsClient.UrlService.buildEnableUrl('', 'invalid_state'));
     }
 
     usersUnvalidated[state] = Date.now();
 
-    return res.redirect(AbilitiesLibrary.UrlService.buildEnableUrl(state));
+    return res.redirect(FocalsClient.UrlService.buildEnableUrl(state));
 });
 
 /**
@@ -141,7 +142,18 @@ router.post('/action', async (req, res) => {
 
     try {
         console.log(`got an action ${JSON.stringify(req.body)}`);
-        const { type, body } = req.body;
+        let { type, body } = req.body;
+
+        // Check if the received packet is encrypted, and attempt to decrypt it if so
+        if (body !== undefined && body.version && semver.valid(body.version) && semver.gte(body.version, '2.0.0')) {
+            try {
+                body = FocalsClient.EncryptionService.decryptPacket(body);
+            }
+            catch (err) {
+                Logger.error('Unexpected error while decrypting action packet');
+                throw err;
+            }
+        }
 
         if (type === 'integration:validate') {
             const { state, userId } = body;
