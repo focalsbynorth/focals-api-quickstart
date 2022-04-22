@@ -7,7 +7,7 @@
     "license": "ISC",
     "dependencies": {
         "@bynorth/focals-client-js": "^0.1.2",
-        "nconf": "^0.10.0",
+        "nconf": "^0.11.4",
         "request-promise-native": "^1.0.7",
         "semver": "^6.3.0"
     },
